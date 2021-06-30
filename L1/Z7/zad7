@@ -1,0 +1,5 @@
+find /usr/share/locale/*/LC_MESSAGES  -name *.mo | sed 's/\/usr\/share\/locale\///' | sed 's/\/.*\.mo//' | uniq | sort
+find /usr/share/locale/*/LC_MESSAGES  -name dpkg.mo | sed 's/\/usr\/share\/locale\///' | sed 's/\/.*\.mo//' | uniq | sort
+find /usr/share/locale/pl/LC_MESSAGES/ -name *.mo   | sed 's/\/usr\/share\/locale\/pl\/LC_MESSAGES\///' | sed 's/.mo//'
+for i in {1..8}; do echo "man$i:"; find /usr/share/man/pl/man$i/ *.[1-8]*  | sed 's/\/.*\///'| sort | uniq ; done 2>/dev/null
+for i in {1..8}; do echo "man$i:"; find /usr/share/man/man$i -regextype posix-basic -regex "/usr/share/man/man${i}/.${i}.gz" > /dev/null && echo "en";  find /usr/share/man/ -regextype posix-basic -regex "/usr/share/man/.*/man${i}/.*.gz" | sed 's/\/usr\/share\/man\///' | sed 's/\/.*.gz//' | sort | uniq ; done 

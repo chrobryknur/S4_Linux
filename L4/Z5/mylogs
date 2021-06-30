@@ -1,0 +1,10 @@
+#!/bin/sh
+
+pipe="/tmp/mylog.fifo"
+test -p $pipe || mkfifo $pipe
+
+while true
+  do
+    read LINE < $pipe 
+    [ ! -z "$LINE" ] && echo "$(date +'%Y-%m-%d %H:%M:%S') $LINE"
+  done

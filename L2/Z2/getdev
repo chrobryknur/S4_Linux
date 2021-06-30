@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Marcin Dąbrowski 315370
+# Lista 2
+# Zadanie 2
+
+if [ $# -eq 0 ]; then
+    echo "No arguments provided!"
+    exit 1
+fi
+
+if [ $1 = "/" ]; then
+  arg=$(echo $1)
+else
+  arg=$(echo $1 | rev | sed 's/\/*\(.*\)/\1/' | rev)
+fi
+output=$(grep "^[^#]*$arg " /etc/fstab)
+
+echo $output | awk '{print "Device: |" $1}
+                    {print "Filesystem type: |" $3}
+                    {print "Mount options: |" $4}
+                    {print "Dump frequency: |" $5}
+                    {print "Fsck pass number: |" $6}' | column -t -c 2 -s "|"

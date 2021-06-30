@@ -1,0 +1,11 @@
+diff --side-by-side --suppress-common-lines <(dpkg --get-selections | awk '{print $1}' | sort) <(ls /usr/share/doc | sort) | awk {'print $1'} | tr -d '>' | sed '/^$/d'
+diff --side-by-side --suppress-common-lines <(dpkg --get-selections | awk '{print $1}' | sort) <(ls /usr/share/doc | sort) | awk {'print $2'} | tr -d '<|' | sed '/^$/d' | xargs -n 1 echo '/usr/share/doc' | sed -e 's/ /\//g' | xargs dpkg-query -S
+find /usr/share/doc -maxdepth 1 -type d '!' -exec test -e "{}/changelog.Debian.gz" ';' -print | xargs dpkg-query -S
+
+find /usr/share/doc -maxdepth 1 -type d -exec test -e "{}/changelog.Debian.gz" ';' -print | sed 's/.*/&\/changelog.Debian.gz/g' > lista
+for file in $(<lista); do if [ $(zcat $file | grep -ic "\*") -eq 1 ]; then echo $file; fi ; done
+
+zcat /usr/share/doc/bash/INTRO.gz | grep -ci "bash"
+
+# different solution
+dpkg -l | awk 'NR>6 {if($1 == "ii") print $2}' | sed 's/:amd64$//;s/:i386$//' | while FS=$'\n' read x; do if [ ! -d "/usr/share/doc/$x"  ]; then echo $x ; fi ; done

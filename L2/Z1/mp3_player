@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Marcin Dąbrowski 315370
+# Lista 2
+# Zadanie 1
+
+IFS=$'\n'
+
+tracks_list=$(find . -name '*\.mp3')
+
+for track in $tracks_list ; do
+  tracks+=("$(mp3info -p "%l (%a): %t" $track)")
+done;
+
+
+
+PS3="Choose a song to play > "
+
+select i in ${tracks[@]} ; do
+  if [ $((REPLY)) -ge 1 ] && [ $((REPLY)) -le "${#tracks[@]}" ]; then
+    iter=0
+    for track in $tracks_list ; do
+      if [ $((iter+1)) -eq $((REPLY)) ]; then
+        mplayer -noconsolecontrols -really-quiet "$track" 2>/dev/null
+        break;
+      fi
+      iter=$((iter+1))
+    done;
+  echo
+  else
+    echo "Wrong answer"
+  fi
+done;

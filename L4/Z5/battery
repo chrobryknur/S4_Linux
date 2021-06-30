@@ -1,0 +1,11 @@
+#!/bin/bash
+
+while true
+do
+  state=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep state | awk '{if ($2 == "charging") print "CHR"; else print "DIS";}')
+  percentage=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percentage | awk '{print $2}')
+  echo "$state: $percentage" >> /tmp/mylog.fifo
+  read -n1 -t 10 && break
+done
+
+

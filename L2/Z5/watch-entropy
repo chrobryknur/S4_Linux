@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Marcin Dąbrowski 315370
+# Lista 2
+# Zadanie 5
+
+while true;
+do
+  poolsize=$(cat /proc/sys/kernel/random/poolsize)
+  entropyavail=$(cat /proc/sys/kernel/random/entropy_avail)
+  printf "Available entropy: $entropyavail/$poolsize    \r"
+  if  read -n1 -t 1 
+  then
+    break
+  fi
+done
+
+printf '\r\033[K%s'

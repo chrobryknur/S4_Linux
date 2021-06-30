@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while true
+  do
+    free -m | awk 'NR==2 { print $3 " MiB" }' >> /tmp/mylog.fifo
+    read -n1 -t 5 && break
+  done
+
+
+

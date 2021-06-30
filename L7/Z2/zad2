@@ -1,0 +1,17 @@
+#!/bin/bash
+
+trap "pkill -TERM -P $$ && echo 'Killing all subprocessess' && exit" SIGINT
+
+[ -z "$1" ] && echo "Usage: ./zad2 n " && exit
+
+for i in $(seq $1)
+do
+        nice -n $((-i)) yes > /dev/null&
+done
+
+echo "Running stress test"
+
+while true
+do
+        sleep 3
+done

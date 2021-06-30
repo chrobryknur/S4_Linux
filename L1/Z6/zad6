@@ -1,0 +1,5 @@
+find / -regextype posix-basic -regex ".*\.so\(\.[0-9]\+\)\?$"
+find / -type l -exec readlink -f {} + | grep ".*\.so\(\.[0-9]\+\)\?$"
+find /  -regextype posix-basic -regex ".*\.so\(\.[0-9]\+\)\?$" -printf "%s\n" | awk '{s+=$1}{l+=1} END {print l,s,s/l'}'
+find /  -regextype posix-basic -regex ".*\.so\(\.[0-9]\+\)\?$" | xargs dirname | uniq | sort
+find / -type l -exec readlink -f {} + | grep ".*\.so\(\.[0-9]\+\)\?$" | xargs dirname | sort | uniq

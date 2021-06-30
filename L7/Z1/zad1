@@ -1,0 +1,10 @@
+#!/bin/bash
+trap "" SIGHUP
+trap "logger 'SIGUSR1 signal received, exiting' && exit" SIGUSR1
+
+
+while true
+do
+        logger "CPU: $(head -n 1 /proc/stat | awk '{print $2}')"
+        sleep 3
+done

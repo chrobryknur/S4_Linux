@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Marcin Dabrowski 315370
+# Lista 2
+# Zadanie 4
+
+PRIMES=(2)
+i=1
+n=3
+
+if [ $# -eq 0 ]; then
+  MAX=1000
+else
+  MAX=$1
+fi
+
+while [ $n -le $MAX ];
+do
+  j=0
+  while [ $((${PRIMES[$j]}*${PRIMES[$j]})) -le $n ];
+  do
+    if [ $((n%${PRIMES[$j]})) -eq 0 ]; then
+      n=$((n+1))
+      continue 2
+    fi
+    j=$((j+1))
+  done;
+  PRIMES[$i]=$n
+  i=$((i+1))
+  n=$((n+1))
+done;
+
+echo ${PRIMES[@]}
+
